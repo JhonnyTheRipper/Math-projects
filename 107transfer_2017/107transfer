@@ -1,0 +1,31 @@
+#! /usr/bin/ruby
+$LOAD_PATH.unshift('.')
+require "resources.rb"
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+if ARGV[0] == "-h"
+  printf ("USAGE\n\t./107transfer [num den]*");
+  printf ("\n\nDESCRIPTION
+    \tnum   polynomial numerator defined by its coeficients
+    \tden   polynomial denominator defined by its coeficients\n")
+end
+
+len = ARGV.length
+array = Array.new(len)
+for i in 0..len - 1
+	array[i] = ARGV[i].split("*")
+	array[i].collect do |value|
+		value.to_f
+	end
+end
+
+function(array)
