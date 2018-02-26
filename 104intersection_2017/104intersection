@@ -1,0 +1,52 @@
+#! /usr/bin/ruby
+
+$LOAD_PATH.unshift('.')
+require "resources.rb"
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+for i in 0..7
+  if letter?(ARGV[i])
+    exit 84
+  end
+end
+
+unless ARGV.length == 8
+  exit 84
+end
+
+opt = ARGV[0].to_f
+xp = ARGV[1].to_f
+yp = ARGV[2].to_f
+zp = ARGV[3].to_f
+xv = ARGV[4].to_f
+yv =  ARGV[5].to_f
+zv = ARGV[6].to_f
+p = ARGV[7].to_f
+
+case opt
+when opt == 1
+  puts "sphere of radius #{'%.00f' % p}"
+when opt == 2
+  puts "cylinder of radius #{'%.00f' % p}"
+else opt == 3
+  puts "cone of #{'%.00f' % p} degree angle"
+end
+print "straight line going through the (#{'%.00f' % xp},#{'%.00f' % yp},#{'%.00f' % zp})"
+puts " point and of direction vector (#{'%.00f' % xv},#{'%.00f' % yv},#{'%.00f' % zv})"
+
+if opt == 1
+  sphere(xp, yp, zp, xv, yv, zv, p)
+elsif opt == 2
+  cylinder(xp, yp, zp, xv, yv, zv, p)
+elsif opt == 3
+  cone(xp, yp, zp, xv, yv, zv, p)
+end

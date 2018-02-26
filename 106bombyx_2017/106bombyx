@@ -1,0 +1,40 @@
+#! /usr/bin/ruby
+$LOAD_PATH.unshift('.')
+require "resources.rb"
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+if ARGV[0] == "-h"
+  printf ("USAGE\n\t./106bombyx n [k | i0 i1]");
+  printf ("\n\nDESCRIPTION
+    n\tnumber of first generation individuals
+    k\tgrowth rate from 1 to 4
+    i0\tinitial generation (included)
+    i1\tfinal generation (included)\n")
+  end
+
+if ARGV.length == 3
+  for i in 0..2
+    if letter?(ARGV[i])
+      exit 84
+    end
+  end
+  k_rate(ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i)
+elsif ARGV.length == 2
+  for i in 0..1
+    if letter?(ARGV[i])
+      exit 84
+    end
+  end
+  zero_to_hundred(ARGV[0].to_i, ARGV[1].to_f)
+else
+  exit 84
+end

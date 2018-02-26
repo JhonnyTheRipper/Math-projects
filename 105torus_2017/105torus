@@ -1,0 +1,40 @@
+#! /usr/bin/ruby
+
+$LOAD_PATH.unshift('.')
+require "resources.rb"
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+unless ARGV.length == 7
+  exit 84
+end
+
+for i in 0..6
+  if letter?(ARGV[i])
+    exit 84
+  end
+end
+
+opt = ARGV[0].to_i
+a0 = ARGV[1].to_f
+a1 = ARGV[2].to_f
+a2 = ARGV[3].to_f
+a3 = ARGV[4].to_f
+a4 =  ARGV[5].to_f
+n = ARGV[6].to_f
+
+if opt == 1
+  biser_me(a0, a1, a2, a3, a4, n)
+elsif opt == 2
+  newtone(a0, a1, a2, a3, a4, n)
+elsif opt == 3
+  secant(a0, a1, a2, a3, a4, n)
+end

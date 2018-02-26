@@ -1,0 +1,42 @@
+#! /usr/bin/ruby
+
+$LOAD_PATH.unshift('.')
+require "resources.rb"
+
+if ARGV.length < 3 or ARGV.length > 3
+	exit 84
+end
+
+if ARGV[2].to_i == 0
+	length = ARGV[1].bytesize
+	length = Math.sqrt(length)
+
+	if length == length.to_i
+	  length = length.to_i
+	else
+	  length = length.to_i  + 1
+	end
+
+	arr = matrix(length, ARGV[1])
+	puts "Key matrix :"
+	print_matrix(arr, length)
+
+	rows = ARGV[0].bytesize.to_f / length
+	if rows == rows.to_i
+	  rows = rows.to_i
+	else
+	  rows = rows.to_i  + 1
+	end
+	message_array = message_matrix(rows, length, ARGV[0])
+	res = matrix_mult(message_array, arr, length, rows)
+	puts "\nEncrypted message :"
+	print_message(res)
+end
+
+#print ("\n")
+#printmessmatrix(message_array, f, length)
+
+
+#elsif ARGV[2].to_i == 0
+#  length = invermatrix(length, ARGV[1])
+#end

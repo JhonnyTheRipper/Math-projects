@@ -1,0 +1,128 @@
+#!/usr/bin/ruby
+# @Author: Vladnm
+# @Date:   2017-11-20 14:28:15
+# @Last Modified by:   Vladnm
+# @Last Modified time: 2017-11-20 14:34:06
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+tex = ARGV[0].to_f
+tey = ARGV[1].to_f
+w = 1.00
+plus = checker = 2
+translation ||= 0
+rotation ||= 0
+symmetry ||= 0
+homothety ||= 0
+
+if ARGV.empty?
+	exit(84)
+end
+
+if ARGV.length < 4
+	exit(84)
+end
+
+while ARGV[checker] != nil do
+	if ARGV[checker] == "-t"
+		if letter?(ARGV[checker+1]) or letter?(ARGV[checker+2])
+			exit(84)
+		end
+		if ARGV[checker+1] == nil or ARGV[checker+2] == nil
+			exit(84)
+		end
+		tx = ARGV[checker+1].to_f
+		ty = ARGV[checker+2].to_f
+		translation = 1
+	end
+	if ARGV[checker] == "-h"
+		if letter?(ARGV[checker+1]) or letter?(ARGV[checker+2])
+			exit(84)
+		end
+		if ARGV[checker+1] == nil or ARGV[checker+2] == nil
+			exit(84)
+		end
+		sx = ARGV[checker+1].to_f
+		sy = ARGV[checker+2].to_f
+		homothety = 1
+	end
+	if ARGV[checker] == "-r"
+		if letter?(ARGV[checker+1])
+			exit(84)
+		end
+		if ARGV[checker+1] == nil
+			exit(84)
+		end
+		tempr = ARGV[checker+1].to_f
+		radtempr = tempr *Math::PI/180
+		rx1r = Math.cos(radtempr)
+		rx2r = -Math.sin(radtempr)
+		ry1r = Math.sin(radtempr)
+		ry2r = Math.cos(radtempr)
+		rotation = 1
+		checker -= 1
+	end
+	if ARGV[checker] == "-s"
+		if letter?(ARGV[checker+1]) 	
+			exit(84)
+		end
+		if ARGV[checker+1] == nil
+			exit(84)
+		end
+		temp = ARGV[checker+1].to_f
+		radtemp = temp*Math::PI/180
+		rx1 = -Math.cos(radtemp)
+		rx2 = -Math.sin(radtemp)
+		ry1 = Math.sin(radtemp)
+		ry2 = -Math.cos(radtemp)
+		symmetry = 1
+	end
+	
+	checker += 3
+end
+if translation == 1
+	xarr = [1, 0, tx]
+	yarr = [0, 1, ty]
+	zarr = [0, 0, 1]
+	puts "Translation by the vector (#{'%.00f' % tx}, #{'%.00f' % ty})\n"
+end
+
+if homothety == 1
+	xarr = [sx, 0, 0]
+	yarr = [0, sy, 0]
+	zarr = [0, 0, 1]
+	puts "Homothety by the ratios #{'%.00f' % sx} and #{'%.00f' % sy}\n"
+end
+
+if rotation == 1
+	xarr = [rx1r, rx2r, 0]
+	yarr = [ry1r, ry2r, 0]
+	zarr = [0, 0, 1]
+	puts "Rotation at a #{'%.00f' % tempr} degree angle\n"
+end
+
+if symmetry == 1
+	xarr = [ry1, ry2, 0]
+	yarr = [rx1, rx2, 0]
+	zarr = [0, 0, 1]
+	puts "Symmetry about an axis inclined with an angle of #{'%.00f' % temp} degrees\n"
+end
+
+puts "#{'%.02f' % xarr[0]}\t#{'%.02f' % xarr[1]}\t#{'%.02f' % xarr[2]}\n"
+puts "#{'%.02f' % yarr[0]}\t#{'%.02f' % yarr[1]}\t#{'%.02f' % yarr[2]}\n"
+puts "#{'%.02f' % zarr[0]}\t#{'%.02f' % zarr[1]}\t#{'%.02f' % zarr[2]}\n"
+
+x = (xarr[0]*tex+xarr[1]*tey+xarr[2]*w)
+y = (yarr[0]*tex+yarr[1]*tey+yarr[2]*w)
+w = (zarr[0]*tex+zarr[1]*tey+zarr[2]*w)
+x /= w
+y /= w
+puts "(#{'%.f' %tex},#{'%.f' %tey}) => (#{'%.02f' %x},#{'%.02f' %y})"
