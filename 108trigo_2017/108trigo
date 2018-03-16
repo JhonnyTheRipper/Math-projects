@@ -1,0 +1,69 @@
+#! /usr/bin/ruby
+
+$LOAD_PATH.unshift('.')
+require "exp.rb"
+require "cos.rb"
+require "sin.rb"
+require "cosh.rb"
+require "sinh.rb"
+require "resources.rb"
+
+
+def letter?(string)
+	string.chars.any? { |char| ('a'..'z').include? char.downcase }
+end
+
+class String
+	def initial
+		self[0,1]
+	end
+end
+
+flag = ARGV[0]
+
+matrix_size = ARGV.length - 1
+matrix_size = Math.sqrt(matrix_size)
+
+for i in 1 .. matrix_size + 2
+	if letter?(ARGV[i])
+		exit (84)
+	end
+end
+
+unless (matrix_size % 1).zero?
+	exit(84)
+end
+
+array = Array.new
+
+for i in 0..matrix_size ** 2 - 1 do
+	array[i] = ARGV[i + 1].to_f
+end
+
+array_1 = Array.new
+for i in 0..matrix_size ** 2 - 1 do
+	array_1[i] = 0
+	if i == 0 or i == matrix_size ** 2 - 1
+		array_1[i] = 1
+	end
+end
+
+matrix = matrix_create(matrix_size, array)
+matrix_1 = matrix_create(matrix_size, array_1)
+
+
+
+case flag
+when "EXP"
+	exp_cal(matrix, matrix_1, matrix_size)
+when "COS"
+	puts "cos"
+when "SIN"
+	puts "sin"
+when "COSH"
+	puts "cosh"
+when "SINH"
+	puts "sinh"
+else
+	exit(84)
+end
