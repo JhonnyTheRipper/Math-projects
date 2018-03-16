@@ -57,13 +57,13 @@ case flag
 when "EXP"
 	exp_cal(matrix, matrix_1, matrix_size)
 when "COS"
-	puts "cos"
+	cos_cal(matrix, matrix_1, matrix_size)
 when "SIN"
-	puts "sin"
+	sin_cal(matrix, matrix_size)
 when "COSH"
-	puts "cosh"
+	cosh_cal(matrix, matrix_1, matrix_size)
 when "SINH"
-	puts "sinh"
+	sinh_cal(matrix, matrix_size)
 else
 	exit(84)
 end

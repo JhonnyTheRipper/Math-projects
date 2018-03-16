@@ -85,3 +85,18 @@ def print_matrix(arr, len)
     print "\n"
   end
 end
+
+def matrix_suppr(matrix, sup, matrix_size)
+	res = Array.new(matrix_size) {Array.new(matrix_size, 0)}
+	x = 0;
+	y = 0;
+	while y < matrix_size do
+		x = 0
+		while x < matrix_size do
+			res[y][x] = matrix[y][x] - sup[y][x]
+			x += 1
+		end
+		y += 1
+	end
+	return res
+end
