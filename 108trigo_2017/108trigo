@@ -24,11 +24,11 @@ flag = ARGV[0]
 matrix_size = ARGV.length - 1
 matrix_size = Math.sqrt(matrix_size)
 
-for i in 1 .. matrix_size + 2
-	if letter?(ARGV[i])
-		exit (84)
-	end
-end
+#for i in 1 .. matrix_size + 1
+#	if letter?(ARGV[i])
+#		exit (84)
+#	end
+#end
 
 unless (matrix_size % 1).zero?
 	exit(84)
